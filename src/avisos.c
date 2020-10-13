@@ -214,7 +214,8 @@ int avisos_findByIdCliente(Avisos* pArray, int length, int id)
 	return retorno;
 }
 /*
-* \brief Devuelve como retorno el indice del ID pasado como parametro.
+* \brief 	Devuelve como retorno la cantidad de avisos con estado=1
+* 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
 * \param int idValue ID recibido a buscar

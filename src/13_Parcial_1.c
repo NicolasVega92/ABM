@@ -245,7 +245,7 @@ int main(void) {
 					//if(cliente_print(arrayClientes, QTY_CLIENTE)==0)
 					if(info_printClienteWithAvisos(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE)==0)
 					{
-						printf("Clientes impresos todo bien\n");
+						printf("Clientes impresos\n");
 					//	avisos_print(arrayAvisos, QTY_AVISOS);
 					}
 					else

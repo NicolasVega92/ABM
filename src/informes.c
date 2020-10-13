@@ -76,7 +76,14 @@ int info_printClienteById(Avisos* pArray, int length, Cliente* pArrayCliente, in
 	return retorno;
 }
 /*
- *
+* \brief 	Imprime los valores del Cliente y le agrega al print la cantidad de avisos buscados por la funcion
+* 			avisos_countActiveByIdCliente()
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \param 	int idClienteRef sector recibido
+* \return int Return (-1) Error / (0) Ok
 */
 int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
@@ -85,7 +92,7 @@ int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayClien
 	int contadorActivos;
 	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
 	{
-		printf(" ID|         Nombre|       Apellido|           CUIT|  Cantidad de avisos publicados\n");
+		printf(" ID|         Nombre|       Apellido|           CUIT|  Cantidad de avisos activos\n");
 		for(i=0; i < lengthCliente; i++)
 		{
 			if(pArrayCliente[i].isEmpty == FALSE)
