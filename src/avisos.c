@@ -487,6 +487,7 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 {
 	int retorno = -1;
 	int i;
+	int flagAviso = 0;
 	if(pArray!=NULL && length > 0 && idBuscar > 0)
 	{
 		printf("Avisos que posee el cliente a dar de baja:\n");
@@ -496,9 +497,14 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 			{
 				if(pArray[i].idCliente == idBuscar)
 				{
-					printf("%s - %s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].estado]);
+					printf("%s - %s\n\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].estado]);
+					flagAviso = 1;
 				}
 			}
+		}
+		if(flagAviso == 0)
+		{
+			printf("0\n");
 		}
 	}
 	return retorno;

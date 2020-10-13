@@ -335,7 +335,7 @@ int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayClie
 			{
 				maxAvisos = arrayAux[i].cantidad;
 				indiceMax = arrayAux[i].idCliente;
-				strncpy(maxCuit, arrayAux[i].cuit,LONG_NAME);
+				strncpy(maxCuit, arrayAux[i].cuit,sizeof(maxCuit)-1);
 			}
 		}
 		printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", indiceMax, maxCuit,maxAvisos);

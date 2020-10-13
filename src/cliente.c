@@ -84,8 +84,8 @@ int cliente_add(Cliente* pArray, int length, int id, char name[], char lastName[
 		{
 			pArray[indiceLibre].id = id;
 			pArray[indiceLibre].isEmpty = FALSE;
-			strncpy(pArray[indiceLibre].nameCliente, name, LONG_NAME);
-			strncpy(pArray[indiceLibre].lastName, lastName, LONG_NAME);
+			strncpy(pArray[indiceLibre].nameCliente, name, sizeof(pArray[indiceLibre].nameCliente)-1);
+			strncpy(pArray[indiceLibre].lastName, lastName, sizeof(pArray[indiceLibre].lastName)-1);
 			strncpy(pArray[indiceLibre].cuit, cuit, sizeof(pArray[indiceLibre].cuit)-1);
 			printf("Id: %d - Cliente:%s %s - CUIT:%s \n", pArray[indiceLibre].id, pArray[indiceLibre].nameCliente, pArray[indiceLibre].lastName, pArray[indiceLibre].cuit);
 		}
