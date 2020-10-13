@@ -107,53 +107,6 @@ int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayClien
 	return retorno;
 }
 /*
- *
- */
-int info_punto8_1(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
-{
-	int retorno = -1;
-	char listaClientes[QTY_CLIENTE][LONG_NAME];
-	int i;
-	int j;
-	int flagExiste;
-	int indiceCuitLibre = 0;
-	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
-	{
-		for(i=0; i < QTY_CLIENTE;i++)
-		{
-			strncpy(listaClientes[i], "", LONG_NAME);
-		}
-		for(i=0; i < lengthCliente; i++)
-		{
-			if(pArrayCliente[i].isEmpty == FALSE)
-			{
-				flagExiste = 0;
-				for(j=0; j < indiceCuitLibre; j++)
-				{
-					if(strncmp(pArrayCliente[i].cuit, listaClientes[j], LONG_NAME)==0)
-					{
-						flagExiste = 1;
-						break;
-					}
-				}
-				if(flagExiste == 0)
-				{
-					strncpy(listaClientes[indiceCuitLibre], pArrayCliente[i].cuit, LONG_NAME);
-					indiceCuitLibre++;
-				}
-			}
-		}
-
-		for(i=0; i< indiceCuitLibre;i++)
-		{
-			printf("cliente con CUIT: %s\n", listaClientes[i]);
-		}
-
-		retorno = 0;
-	}
-	return retorno;
-}
-/*
 */
 int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, char cuit[])
 {
@@ -208,79 +161,6 @@ int aux_init(Auxiliar* pArray, int length)
 	}
 	return retorno;
 }
-
-/*
- *
- */
-int info_aux(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
-{
-	int retorno = -1;
-	Auxiliar arrayAux[lengthCliente];
-	int i;
-	int j;
-	int flagExiste;
-	int indiceCuitLibre = 0;
-	int maxAvisos;
-	int indiceMax;
-	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
-	{
-		aux_init(arrayAux, lengthCliente);
-		for(i=0; i < lengthCliente; i++)
-		{
-			if(pArrayCliente[i].isEmpty == FALSE)
-			{
-				flagExiste = 0;
-				for(j=0; j < indiceCuitLibre; j++)
-				{
-					if(arrayAux[j].isEmpty == FALSE && (arrayAux[j].idCliente == pArrayCliente[i].id))
-					{
-						flagExiste = 1;
-						break;
-					}
-				}
-				if(flagExiste == 0)
-				{
-					arrayAux[indiceCuitLibre].idCliente = pArrayCliente[i].id;
-					arrayAux[indiceCuitLibre].isEmpty = FALSE;
-					indiceCuitLibre++;
-				}
-			}
-		}
-		/*
-		for(i=0; i< indiceCuitLibre;i++)
-		{
-			printf("cliente con ID: %d\n", arrayAux[i].idCliente);
-		}
-		 */
-		for(i = 0; i < lengthCliente;i++)
-		{
-			if(arrayAux[i].isEmpty == FALSE)
-			{
-				for(j=0; j < length;j++)
-				{
-					if(pArray[j].isEmpty == FALSE && arrayAux[i].idCliente == pArray[j].idCliente)
-					{
-						arrayAux[i].cantidad++;
-					}
-				}
-
-			}
-		}
-		for(i=0; i< indiceCuitLibre;i++)
-		{
-			printf("cliente con ID: %d tiene %d avisos\n", arrayAux[i].idCliente, arrayAux[i].cantidad);
-			if(arrayAux[i].cantidad > maxAvisos || i==0)
-			{
-				maxAvisos = arrayAux[i].cantidad;
-				indiceMax = arrayAux[i].idCliente;
-			}
-		}
-		printf("El cliente con mas Avisos es el del ID %d con %d avisos\n\n", indiceMax, maxAvisos);
-		retorno = 0;
-	}
-	return retorno;
-}
-
 /*
 * \brief 	Imprime el id del cliente con la cantidad de avisos que posee
 * 			Imprime el cliente con su cuit y el que tiene mas Avisos
