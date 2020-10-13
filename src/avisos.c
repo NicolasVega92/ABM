@@ -454,8 +454,12 @@ int avisos_printClienteByCuit(Cliente* pArrayCliente, int lengthCliente, Avisos*
 	return retorno;
 }
 */
+
 /*
- *
+* \brief recibe un indice y convierte el campo de ese indice en estado = 0.
+* \param Avisos* pArray, array recibida para crear el avisos
+* \param int length limite del array
+* \return int Return (-1) Error / (0) Ok
  */
 int avisos_estadoPause(Avisos* pArray, int length, int indice)
 {
@@ -468,7 +472,10 @@ int avisos_estadoPause(Avisos* pArray, int length, int indice)
 	return retorno;
 }
 /*
- *
+* \brief recibe un indice y convierte el campo de ese indice en estado = 1.
+* \param Avisos* pArray, array recibida para crear el avisos
+* \param int length limite del array
+* \return int Return (-1) Error / (0) Ok
  */
 int avisos_estadoActive(Avisos* pArray, int length, int indice)
 {

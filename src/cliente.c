@@ -119,8 +119,8 @@ int cliente_addForzada(Cliente* pArray, int length, char name[], char lastName[]
 		{
 			pArray[indiceLibre].id = cliente_generarIdNuevo();
 			pArray[indiceLibre].isEmpty = FALSE;
-			strncpy(pArray[indiceLibre].nameCliente, name, LONG_NAME);
-			strncpy(pArray[indiceLibre].lastName, lastName, LONG_NAME);
+			strncpy(pArray[indiceLibre].nameCliente, name, sizeof(pArray[indiceLibre].nameCliente)-1);
+			strncpy(pArray[indiceLibre].lastName, lastName, sizeof(pArray[indiceLibre].lastName)-1);
 			strncpy(pArray[indiceLibre].cuit, cuit, sizeof(pArray[indiceLibre].cuit)-1);
 		}
 		retorno = 0;

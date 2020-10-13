@@ -14,15 +14,13 @@
 
 
 /*
-* \brief Agrega en el array de la estructura los valores pasados como parametros dentro del indice devuelto por la funcion searchFirstValidPosition
+* \brief Recibe un ID para comparar con los id de los avisos para retornar el idCliente de ese aviso
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param int id Id recibido
-* \param char name[], array que contiene chars
-* \param char lastName[], array que contiene chars
-* \param float salary salario recibido
-* \param int sector sector recibido
-* \return int Return (-1) Error / (0) Ok
+* \param Cliente* pArrayCliente puntero al array recibida
+* \param int lengthCliente limite del array
+* \param int idAvisoBuscar sector recibido
+* \return int Return (-1) Error / numero de ID cliente en caso de Ok
  */
 int info_searchIdClienteByIdAviso(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int idAvisoBuscar)
 {
@@ -47,7 +45,14 @@ int info_searchIdClienteByIdAviso(Avisos* pArray, int length, Cliente* pArrayCli
 	return retorno;
 }
 /*
- *
+* \brief 	Recibe un idCliente de un aviso y lo compara con el array Cliente para imprimir las coincidencias
+* 			del idCliente recibido y el id de los Clientes que estan cargados.
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \param 	int idClienteRef sector recibido
+* \return int Return (-1) Error / (0) Ok
  */
 int info_printClienteById(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int idClienteRef)
 {
