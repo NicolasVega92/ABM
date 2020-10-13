@@ -19,7 +19,7 @@
 	}Avisos;
 	int avisos_init(Avisos* pArray, int length);
 	int avisos_addForzada(Avisos* pArray, int length, char texto[], int idCliente, int numRubro, int estado);
-	int avisos_createAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
+	int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
 	int avisos_add(Avisos* pArray, int length, int id, char texto[], int idCliente, int numRubro, int auxestado);
 	int avisos_findFirstValidPosition(Avisos* pArray, int length);
 	int avisos_remove(Avisos* pArray, int length, int indice);

@@ -20,10 +20,10 @@
 	int cliente_addForzada(Cliente* pArray, int length, char name[], char lastName[], char cuit[]);
 	int cliente_findFirstValidPosition(Cliente* pArray, int length);
 	int cliente_findById(Cliente* pArray, int length, int id);
-	int cliente_createCliente(Cliente* pArray, int length);
+	int cliente_create(Cliente* pArray, int length);
 	int cliente_altaCliente(int length, int* pId, char aName[], char aLastName[], char aCuit[]);
 	int cliente_add(Cliente* pArray, int length, int id, char name[], char lastName[], char cuit[]);
-	int cliente_modifyClienteAll(Cliente* pArray, int length, int indice); //MODIFICA TODO
+	int cliente_modifyAll(Cliente* pArray, int length, int indice); //MODIFICA TODO
 	int cliente_modifyClienteByIndex(Cliente* pArray, int length, int indice); //MODIFICA POR OPCIONES
 	int cliente_remove(Cliente* pArray, int length, int indice);
 	int cliente_print(Cliente* pArray, int length);

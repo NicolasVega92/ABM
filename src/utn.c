@@ -543,14 +543,14 @@ static int isAlphNum(char cadena[])
 int utn_getCuit(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite)
 {
 	int retorno = -1;
-	char bufferString[LONG_NAME];
+	char bufferString[LONG_CUIT];
 
 	if(pMensaje != NULL && pResultado != NULL && pMensajeError != NULL && reintentos >= 0 && limite > 0 )
 	{
 		do
 		{
 			printf("%s", pMensaje);
-			if(	(myGets(bufferString, LONG_NAME)== 0) &&
+			if(	(myGets(bufferString, LONG_CUIT)== 0) &&
 				(strnlen(bufferString, sizeof(bufferString)-1) <= limite) &&
 				(isCuit(bufferString)==1))
 			{
@@ -572,7 +572,7 @@ int utn_getCuit(char* pMensaje, char* pMensajeError, char* pResultado, int reint
 	return retorno;
 }
 /**
- * \brief Verifica si la cadena son numeros, letras con o sin tilde y espacio
+ * \brief Verifica si la cadena son numeros con guion en el indice 2 y 11
  * \param cadena Cadena de caracteres a ser analizada
  * \return 1 EXITO / (0) ERROR
  */
@@ -586,11 +586,21 @@ static int isCuit(char cadena[])
 	}
 	for(i=0 ; cadena[i] != '\0'; i++)
 	{
-		if(	(cadena[i] != '-') &&
-			(cadena[i] < '0' || cadena[i] > '9'))
+		if(i == 2 || i == 11)
 		{
-			retorno = 0;
-			break;
+			if(cadena[i] != '-')
+			{
+				retorno = 0;
+				break;
+			}
+		}
+		else
+		{
+			if((cadena[i] < '0' || cadena[i] > '9'))
+			{
+				retorno = 0;
+				break;
+			}
 		}
 	}
 	return retorno;

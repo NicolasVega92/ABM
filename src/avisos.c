@@ -398,7 +398,7 @@ int avisos_removeByIdCliente(Avisos* pArray, int length, int idClienteARemover)
 * \param int length limite del array
 * \return int Return (-1) Error / (0) Ok
  */
-int avisos_createAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
+int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
 	int retorno = -1;
 	int id;

@@ -233,7 +233,7 @@ int cliente_modifyClienteByIndex(Cliente* pArray, int length, int indice)
 * \param int indice Int buscado en el array para modificar algún campo
 * \return int Return (-1) Error / (0) Ok
  */
-int cliente_modifyClienteAll(Cliente* pArray, int length, int id)
+int cliente_modifyAll(Cliente* pArray, int length, int id)
 {
 	int retorno = -1;
 	Cliente bufferCliente = pArray[id];
@@ -310,7 +310,7 @@ int cliente_remove(Cliente* pArray, int length, int indice)
 * \param 	int length limite del array
 * \return 	int Return (-1) Error / (0) Ok
  */
-int cliente_createCliente(Cliente* pArray, int length)
+int cliente_create(Cliente* pArray, int length)
 {
 	int retorno = -1;
 	int id;
