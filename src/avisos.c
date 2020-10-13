@@ -505,7 +505,7 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 			{
 				if(pArray[i].idCliente == idBuscar)
 				{
-					printf("%s - %s\n\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].estado]);
+					printf("%s - %s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].estado]);
 					flagAviso = 1;
 				}
 			}
