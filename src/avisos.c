@@ -191,7 +191,7 @@ int avisos_findById(Avisos* pArray, int length, int id)
 * \param int length limite del array
 * \param int idValue ID recibido a buscar
 * \return int Return (-1) Error / (0) Ok
-* */
+*
 int avisos_findByIdCliente(Avisos* pArray, int length, int id)
 {
 	int retorno = -1;
@@ -212,7 +212,7 @@ int avisos_findByIdCliente(Avisos* pArray, int length, int id)
 		}
 	}
 	return retorno;
-}
+}*/
 /*
 * \brief 	Devuelve como retorno la cantidad de avisos con estado=1
 * 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
@@ -364,10 +364,11 @@ int avisos_remove(Avisos* pArray, int length, int indice)
 	return retorno;
 }
 /*
-* \brief Remueve un avisos del array poniendo a isEmpty == TRUE
+* \brief 	recibe un id y recorriendo el array struct Avisos pondra en TRUE el isEmpty
+* 			que coincidan el id recibido con el idCliente de avisos
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param int indice indice recibido a buscar en el array
+* \param int idClienteARemover indice recibido a buscar en el array
 * \return int Return (-1) Error / (0) Ok
 */
 int avisos_removeByIdCliente(Avisos* pArray, int length, int idClienteARemover)
@@ -489,7 +490,11 @@ int avisos_estadoActive(Avisos* pArray, int length, int indice)
 	return retorno;
 }
 /*
- *
+* \brief 	recibe un id y recorriendo la struct Avisos imprime el campo rubro y su estado
+* 			que coincida el id recibido con el .idCliente de avisos
+* \param 	Avisos* pArray, array recibida para crear el avisos
+* \param 	int length limite del array
+* \return 	int Return (-1) Error / (0) Ok
  */
 int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 {

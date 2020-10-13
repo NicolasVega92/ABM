@@ -469,13 +469,13 @@ int cliente_gainMoreThanAverage(Cliente* pArray, int length, float average, int*
 void cliente_menuOptions()
 {
 	printf(	"Ingrese una de las siguientes opciones:\n"
-			"1- Dar de alta una Cliente\n"
-			"2- Modificar algúna cliente por ID\n"
-			"3- Dar de baja una cliente\n"
-			"4- CONTRATAR AVISOS\n"
+			"1- Dar de alta un Cliente\n"
+			"2- Modificar algún cliente por ID\n"
+			"3- Dar de baja un cliente\n"
+			"4- Contratar avisos\n"
 			"5- Pausar Aviso de publicacion\n"
 			"6- Reanudar Aviso de publicacion\n"
-			"7- Imprimir clientes COMPLETAS AVISOS\n"
-			"8- INFORMES\n"
+			"7- Imprimir clientes\n"
+			"8- Informes\n"
 			"9- Salir\n");
 }

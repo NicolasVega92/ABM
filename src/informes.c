@@ -282,7 +282,13 @@ int info_aux(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthClien
 }
 
 /*
- *
+* \brief 	Imprime el id del cliente con la cantidad de avisos que posee
+* 			Imprime el cliente con su cuit y el que tiene mas Avisos
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \return int Return (-1) Error / (0) Ok
  */
 int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
@@ -356,7 +362,10 @@ int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayClie
 	return retorno;
 }
 /*
- *
+* \brief 	Devuelve como retorno la cantidad de avisos pausados recorriendo el struct de Avisos
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \return int Return (-1) Error / numero de avisos pausados Ok
  */
 int info_calcularAvisosPausados(Avisos* pArray, int length)
 {
@@ -377,7 +386,13 @@ int info_calcularAvisosPausados(Avisos* pArray, int length)
 	return retorno;
 }
 /*
- *
+* \brief 	Imprime el rubro con la cantidad de avisos que posee
+* 			Imprime el rubro que tiene mas Avisos
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \return int Return (-1) Error / (0) Ok
  */
 int info_calcularMaxRubro(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
