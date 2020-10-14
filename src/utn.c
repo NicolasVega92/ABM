@@ -27,9 +27,6 @@ static int isDni(char cadena[]);
 static int utn_itIsAValidText(char array[], int limite);
 static int isLettersNumbersAndSpace(char cadena[]);
 static int utn_upperFirstChar(char pArray[]);
-
-
-
 /**
  * \brief Solicita un entero al usuario, luego de verificar devuelve el resultado
  * \param char* pMensaje, Es el mensaje mostrado al usuario

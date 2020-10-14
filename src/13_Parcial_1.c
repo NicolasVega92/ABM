@@ -55,6 +55,7 @@ int main(void) {
 			case 2:
 				if(contadorClientes > 0)
 				{
+					cliente_print(arrayClientes, QTY_CLIENTE);
 					if(utn_getNumberInt("Id a modificar:\n", "ERRROR Ingrese un id válido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
 					{
 						indiceById = cliente_findById(arrayClientes, QTY_CLIENTE, idSearch);
@@ -79,6 +80,7 @@ int main(void) {
 			case 3:
 				if(contadorClientes > 0)
 				{
+					cliente_print(arrayClientes, QTY_CLIENTE);
 					if(utn_getNumberInt("Id a buscar:\n", "ERRROR Ingrese un id válido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
 					{
 						avisos_printByIdCliente(arrayAvisos, QTY_AVISOS, idSearch);
@@ -95,11 +97,14 @@ int main(void) {
 							{
 								if(opcion == 1)
 								{
-									if(	cliente_remove(arrayClientes, QTY_CLIENTE, indiceById)==0 &&
-										avisos_removeByIdCliente(arrayAvisos, QTY_AVISOS, idSearch)==0)
+									if(	avisos_removeByIdCliente(arrayAvisos, QTY_AVISOS, idSearch)==0)
 									{
-										printf("Cliente removido\n");
-										contadorClientes--;
+										printf("Avisos del cliente removido\n");
+										if(cliente_remove(arrayClientes, QTY_CLIENTE, indiceById)==0)
+										{
+											printf("Cliente removido\n");
+											contadorClientes--;
+										}
 									}
 								}
 								else
@@ -118,11 +123,12 @@ int main(void) {
 			case 4:
 				if(contadorClientes > 0)
 				{
+					cliente_print(arrayClientes, QTY_CLIENTE);
 					if(avisos_create(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE)==0)
 					{
 						if(avisos_print(arrayAvisos, QTY_AVISOS)==0)
 						{
-							printf("Aviso creado con exito\n");
+							printf("\nAviso creado con exito\n");
 						}
 					}
 					else
@@ -138,6 +144,7 @@ int main(void) {
 			case 5:
 				if(contadorClientes > 0)
 				{
+					avisos_print(arrayAvisos, QTY_AVISOS);
 					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1-100)\n", &idSearch, 3, 1, 100)==0)
 					{
 						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
@@ -149,7 +156,9 @@ int main(void) {
 						{
 							if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
 							{
-								if(utn_getNumberInt("Desea pausar el AVISO\n1-SI\n2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
+								if(utn_getNumberInt("Desea pausar el AVISO\n"
+													"1-SI\n"
+													"2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
 								{
 									if(opcion == 2)
 									{
@@ -177,6 +186,7 @@ int main(void) {
 			case 6:
 				if(contadorClientes > 0)
 				{
+					avisos_print(arrayAvisos, QTY_AVISOS);
 					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
 					{
 						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);

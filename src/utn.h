@@ -31,6 +31,4 @@
 	int utn_getCuit(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite);
 	int utn_getDni(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite);
 	int utn_getText(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite);
-
-
 #endif /* UTN_H_ */

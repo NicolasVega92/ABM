@@ -141,16 +141,13 @@ int avisos_print(Avisos* pArray, int length)
 	int i;
 	if(pArray!=NULL && length > 0)
 	{
-		printf("\n Id|          Rubro| Id cliente|                     Descripción \n");
+		printf("[Avisos Publicados]\n"
+				" Id|          Rubro| Id cliente|                     Descripción \n");
 		for(i=0; i< length; i++)
 		{
 			if(pArray[i].isEmpty == FALSE)
 			{
 				printf("%3d|%15s|%11d|%64s\n",pArray[i].id, TXT_RUBROS[pArray[i].numeroRubro], pArray[i].idCliente, pArray[i].texto);
-				/*printf("%3d| %15s|  %9d|  %12s|\n", 	pArray[i].id,
-														pArray[i].texto,
-														pArray[i].idCliente,
-														TXT_RUBROS[pArray[i].numeroRubro]);*/
 			}
 		}
 		retorno = 0;

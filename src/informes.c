@@ -36,7 +36,6 @@ int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayClien
 			if(pArrayCliente[i].isEmpty == FALSE)
 			{
 				contadorActivos = avisos_countActiveByIdCliente(pArray, QTY_AVISOS, pArrayCliente[i].id);
-				//printf("Este cliente tiene %d avisos ACTIVOS\n\n", contadorActivos);
 				printf("%3d|%15s|%15s|%15s|%15d\n", pArrayCliente[i].id, pArrayCliente[i].nameCliente, pArrayCliente[i].lastName, pArrayCliente[i].cuit, contadorActivos);
 			}
 		}
@@ -161,7 +160,6 @@ int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayClie
 						arrayAux[i].cantidad++;
 					}
 				}
-
 			}
 		}
 		for(i=0; i< indiceCuitLibre;i++)
