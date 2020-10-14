@@ -241,7 +241,7 @@ int cliente_modifyAll(Cliente* pArray, int length, int id)
 	{
 		if(	(utn_getName("Ingrese el nuevo Nombre de la Cliente:\n", "Error, ingrese un nombre válido\n", bufferCliente.nameCliente, 3, LONG_NAME)==0) &&
 			(utn_getName("Ingrese el nuevo Apellido:\n", "Error, ingrese un apellido válido\n", bufferCliente.lastName, 3, LONG_NAME)==0) &&
-			(utn_getCuit("Ingrese el nuevo CUIT del cliente:\n", "Error, ingrese un Cuit válido\n", bufferCliente.cuit, 3, LONG_NAME)==0))
+			(utn_getCuit("Ingrese el nuevo CUIT del cliente:\n", "Error CUIT:(xx-xxxxxxxx-x)\n", bufferCliente.cuit, 3, LONG_NAME)==0))
 		{
 			bufferCliente.isEmpty = FALSE;
 			bufferCliente.id = pArray[id].id;
@@ -269,7 +269,7 @@ int cliente_altaCliente(int length, int* pId, char aName[], char aLastName[], ch
 	{
 		if(	(utn_getName("Ingresa el Nombre del cliente:\n", "Error, por favor reintentelo con un nombre válido\n", aName , 3, LONG_NAME)==0) &&
 			(utn_getName("Ingresa el Apellido del cliente:\n", "Error, por favor reintentelo con un Apellido válido\n", aLastName , 3, LONG_NAME)==0) &&
-			(utn_getCuit("Ingresa el CUIT:\n", "ERROR CUIT\n",  aCuit, 3, LONG_NAME)==0))
+			(utn_getCuit("Ingresa el CUIT:\n", "Error CUIT:(xx-xxxxxxxx-x)\n",  aCuit, 3, LONG_NAME)==0))
 		{
 			*pId = cliente_generarIdNuevo();
 			retorno = 0;

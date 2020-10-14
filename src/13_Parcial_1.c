@@ -169,8 +169,10 @@ int main(void) {
 										auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
 										if(auxId != -1)
 										{
-											avisos_estadoPause(arrayAvisos, QTY_AVISOS, auxId);
-											printf("Aviso PAUSADO con exito\n");
+											if(avisos_estadoPause(arrayAvisos, QTY_AVISOS, auxId)==0)
+											{
+												printf("Aviso PAUSADO con exito\n");
+											}
 										}
 									}
 								}
@@ -207,10 +209,12 @@ int main(void) {
 									else
 									{
 										auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
-										if(auxId != -1)
+										if(auxId !=-1)
 										{
-											avisos_estadoActive(arrayAvisos, QTY_AVISOS, auxId);
-											printf("Aviso ACTIVADO con exito\n");
+											if(avisos_estadoActive(arrayAvisos, QTY_AVISOS, auxId)==0)
+											{
+												printf("Aviso ACTIVADO con exito\n");
+											}
 										}
 									}
 								}

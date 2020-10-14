@@ -21,5 +21,4 @@ static const char TXT_RUBROS[10][LONG_NAME]={"Cerrajería", "Cochera", "Food Truc
 	int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
 	int info_calcularMaxRubro(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
 	int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, char cuit[]);
-	int aux_init(Auxiliar* pArray, int length);
 #endif /* INFORMES_H_ */

@@ -397,34 +397,72 @@ int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int length
 	return retorno;
 }
 /*
-* \brief recibe un indice y convierte el campo de ese indice en estado = 0.
-* \param Avisos* pArray, array recibida para crear el avisos
-* \param int length limite del array
-* \return int Return (-1) Error / (0) Ok
+* \brief 	recibe un indice y convierte el campo de ese indice en estado = 0.
+* 			Si el aviso ya estaba en estado = 0, devuelve un mensaje de error
+* \param 	Avisos* pArray, array recibida para crear el avisos
+* \param 	int length limite del array
+* \return	int Return (-1) Error / (0) Ok
  */
 int avisos_estadoPause(Avisos* pArray, int length, int indice)
 {
 	int retorno = -1;
+	int i;
 	if(pArray != NULL && length >0 && indice >= 0)
 	{
-		pArray[indice].estado = 0;
-		retorno = 0;
+		for(i=0; i < length;i++)
+		{
+			if(pArray[i].isEmpty == FALSE)
+			{
+				if(i == indice)
+				{
+					if(pArray[indice].estado == 1)
+					{
+						pArray[indice].estado = 0;
+						retorno = 0;
+					}
+					else
+					{
+						printf("El aviso ya estaba pausado\n");
+						retorno = -2;
+					}
+				}
+			}
+		}
 	}
 	return retorno;
 }
 /*
-* \brief recibe un indice y convierte el campo de ese indice en estado = 1.
-* \param Avisos* pArray, array recibida para crear el avisos
-* \param int length limite del array
-* \return int Return (-1) Error / (0) Ok
+* \brief 	recibe un indice y convierte el campo de ese indice en estado = 1.
+* 			Si el indice se encontraba en estado = 1, devuelve un mensaje de error.
+* \param 	Avisos* pArray, array recibida para crear el avisos
+* \param 	int length limite del array
+* \return 	int Return (-1) Error / (0) Ok
  */
 int avisos_estadoActive(Avisos* pArray, int length, int indice)
 {
 	int retorno = -1;
+	int i;
 	if(pArray != NULL && length >0 && indice >= 0)
 	{
-		pArray[indice].estado = 1;
-		retorno = 0;
+		for(i=0; i < length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE)
+			{
+				if(i == indice)
+				{
+					if(pArray[indice].estado == 0)
+					{
+						pArray[indice].estado = 1;
+						retorno = 0;
+					}
+					else
+					{
+						printf("El aviso ya estaba activo\n");
+						retorno = -2;
+					}
+				}
+			}
+		}
 	}
 	return retorno;
 }

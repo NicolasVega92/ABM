@@ -11,6 +11,12 @@
 #include "avisos.h"
 #include "utn.h"
 #include "informes.h"
+static int aux_init(Auxiliar* pArray, int length);
+static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length, int indicesRecorrer);
+static int aux_calcularCantDeAvisosByIdCliente(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length);
+static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length,int indiceARecorrer);
+static int aux_calcularCantRubros(Auxiliar* arrayAux, int length, Avisos* pArray, int indiceARecorrer);
+
 
 
 /*
@@ -57,20 +63,17 @@ int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pAr
 		{
 			if(pArray[i].isEmpty == FALSE)
 			{
-			//	if(strncmp(pArrayCliente[i].cuit, cuit, LONG_NAME)==0)
-			//	{
-					indiceArrayCliente = cliente_findById(pArrayCliente, QTY_CLIENTE, pArray[i].idCliente);
-					if(indiceArrayCliente != -1)
-					{
-						contadorAvisos++;
-					}
-					printf("Id:%d  - Nombre: %s  -  Apellido: %s  -   Cuit: %s  - Cantidad de avisos contratados: %d \n",
-																													pArrayCliente[i].id,
-																													pArrayCliente[i].nameCliente,
-																													pArrayCliente[i].lastName,
-																													pArrayCliente[i].cuit,
-																													contadorAvisos);
-			//	}
+				indiceArrayCliente = cliente_findById(pArrayCliente, QTY_CLIENTE, pArray[i].idCliente);
+				if(indiceArrayCliente != -1)
+				{
+					contadorAvisos++;
+				}
+				printf("Id:%d  - Nombre: %s  -  Apellido: %s  -   Cuit: %s  - Cantidad de avisos contratados: %d \n",
+																												pArrayCliente[i].id,
+																												pArrayCliente[i].nameCliente,
+																												pArrayCliente[i].lastName,
+																												pArrayCliente[i].cuit,
+																												contadorAvisos);
 			}
 		}
 		retorno = 0;
@@ -79,11 +82,11 @@ int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pAr
 }
 /*
 * \brief	Inicializa todas las posiciones del array en empty (TRUE).
-* \param Cliente* pArray puntero al array recibido
-* \param int length limite del array
-* \return int Retorna (-1) si se encuentra un error / (0)  Ok
+* \param 	Auxiliar* pArray puntero al array recibido
+* \param 	int length limite del array
+* \return 	(-1) si se encuentra un error / (0)  Ok
 */
-int aux_init(Auxiliar* pArray, int length)
+static int aux_init(Auxiliar* pArray, int length)
 {
 	int retorno = -1;
 	int i;
@@ -99,13 +102,12 @@ int aux_init(Auxiliar* pArray, int length)
 	return retorno;
 }
 /*
-* \brief 	Imprime el id del cliente con la cantidad de avisos que posee
-* 			Imprime el cliente con su cuit y el que tiene mas Avisos
+* \brief 	Crea una estructura auxiliar para generar campos a utilizar, luego llama a otras funciones para los prints
 * \param 	Avisos* pArray puntero al array recibida
 * \param 	int length limite del array
 * \param 	Cliente* pArrayCliente puntero al array recibida
 * \param 	int lengthCliente limite del array
-* \return int Return (-1) Error / (0) Ok
+* \return 	int Return (-1) Error / (0) Ok
  */
 int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
@@ -115,41 +117,105 @@ int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayClie
 	int j;
 	int flagExiste;
 	int indiceCuitLibre = 0;
-	int maxAvisos;
-	int indiceMax;
-	char maxCuit[LONG_NAME];
 	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
 	{
-		aux_init(arrayAux, lengthCliente);
-		for(i=0; i < lengthCliente; i++)
+		if(aux_init(arrayAux, lengthCliente)==0)
 		{
-			if(pArrayCliente[i].isEmpty == FALSE)
+			//Luego de inicializar el Auxiliar recorre el arrayClientes y en los cargados verifica si el CUIT existe en el array Auxiliar
+			//en caso de que si el flagExiste = 1 y no hace nada.
+			//Si no coincide se agrega el CUIT, idCliente y isEmpty al Auxiliar
+			//el indiceCuitLibre aumenta
+			for(i=0; i < lengthCliente; i++)
 			{
-				flagExiste = 0;
-				for(j=0; j < indiceCuitLibre; j++)
+				if(pArrayCliente[i].isEmpty == FALSE)
 				{
-					if(arrayAux[j].isEmpty == FALSE && strncmp(arrayAux[j].cuit, pArrayCliente[i].cuit, LONG_NAME)==0)
+					flagExiste = 0;
+					for(j=0; j < indiceCuitLibre; j++)
 					{
-						flagExiste = 1;
-						break;
+						if(arrayAux[j].isEmpty == FALSE && strncmp(arrayAux[j].cuit, pArrayCliente[i].cuit, LONG_NAME)==0)
+						{
+							flagExiste = 1;
+							break;
+						}
+					}
+					if(flagExiste == 0)
+					{
+						strncpy(arrayAux[indiceCuitLibre].cuit, pArrayCliente[i].cuit, LONG_NAME);
+						arrayAux[indiceCuitLibre].idCliente = pArrayCliente[i].id;
+						arrayAux[indiceCuitLibre].isEmpty = FALSE;
+						indiceCuitLibre++;
 					}
 				}
-				if(flagExiste == 0)
-				{
-					strncpy(arrayAux[indiceCuitLibre].cuit, pArrayCliente[i].cuit, LONG_NAME);
-					arrayAux[indiceCuitLibre].idCliente = pArrayCliente[i].id;
-					arrayAux[indiceCuitLibre].isEmpty = FALSE;
-					indiceCuitLibre++;
-				}
+			}
+			/*
+			for(i=0; i< indiceCuitLibre;i++)
+			{
+				printf("cliente con ID: %d\n", arrayAux[i].idCliente);
+			}
+			 */
+			if(aux_printMaxAvisosWithCuit(arrayAux, lengthCliente, pArray, length, indiceCuitLibre)==0)
+			{
+				retorno = 0;
 			}
 		}
-		/*
-		for(i=0; i< indiceCuitLibre;i++)
+	}
+	return retorno;
+}
+/*
+* \brief 	Imprime el id del cliente con la cantidad de avisos que posee
+* 			Imprime el cliente con su cuit y el que tiene mas Avisos
+* \param 	Auxiliar* arrayAux puntero al array recibida
+* \param 	int length lengthAux del array
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param	int indicesRecorrer limite del array
+* \return int Return (-1) Error / (0) Ok
+ */
+static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length, int indicesRecorrer)
+{
+	int retorno = -1;
+	int i;
+	int maxAvisos;
+	char maxCuit[LONG_CUIT];
+	int indiceMax;
+	if(arrayAux!= NULL && lengthAux >0 && pArray != NULL && length > 0 && indicesRecorrer >= 0)
+	{
+		if(aux_calcularCantDeAvisosByIdCliente(arrayAux, lengthAux, pArray, length)==0)
 		{
-			printf("cliente con ID: %d\n", arrayAux[i].idCliente);
+			for(i=0; i< indicesRecorrer;i++)
+			{
+				//Print de todos los id clientes con su cantidad de avisos activos y pausados
+				printf("cliente con ID: %d tiene %d avisos\n", arrayAux[i].idCliente, arrayAux[i].cantidad);
+				if(arrayAux[i].cantidad > maxAvisos || i==0)
+				{
+					maxAvisos = arrayAux[i].cantidad;
+					indiceMax = arrayAux[i].idCliente;
+					strncpy(maxCuit, arrayAux[i].cuit,sizeof(maxCuit)-1);
+				}
+			}
+			//print del maximo cliente con avisos act y pausados
+			printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", indiceMax, maxCuit,maxAvisos);
+			retorno = 0;
 		}
-		 */
-		for(i = 0; i < lengthCliente;i++)
+	}
+	return retorno;
+}
+/*
+* \brief 	Calcula en la estructura Auxiliar la cantidad de avisos que coinciden con el idCliente del array de Avisos
+* \param 	Auxiliar* arrayAux puntero al array recibida
+* \param 	int length lengthAux del array
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \return 	int Return (-1) Error / (0) Ok
+ */
+static int aux_calcularCantDeAvisosByIdCliente(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length)
+{
+	int retorno=-1;
+	int i;
+	int j;
+	if(arrayAux!= NULL && lengthAux >0 && pArray != NULL && length > 0)
+	{
+		for(i = 0; i < lengthAux;i++)
 		{
 			if(arrayAux[i].isEmpty == FALSE)
 			{
@@ -162,29 +228,17 @@ int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayClie
 				}
 			}
 		}
-		for(i=0; i< indiceCuitLibre;i++)
-		{
-			printf("cliente con ID: %d tiene %d avisos\n", arrayAux[i].idCliente, arrayAux[i].cantidad);
-			if(arrayAux[i].cantidad > maxAvisos || i==0)
-			{
-				maxAvisos = arrayAux[i].cantidad;
-				indiceMax = arrayAux[i].idCliente;
-				strncpy(maxCuit, arrayAux[i].cuit,sizeof(maxCuit)-1);
-			}
-		}
-		printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", indiceMax, maxCuit,maxAvisos);
 		retorno = 0;
 	}
 	return retorno;
 }
 /*
-* \brief 	Imprime el rubro con la cantidad de avisos que posee
-* 			Imprime el rubro que tiene mas Avisos
+* \brief 	Crea una estructura auxiliar para generar campos a utilizar, luego llama a otras funciones para los prints
 * \param 	Avisos* pArray puntero al array recibida
 * \param 	int length limite del array
 * \param 	Cliente* pArrayCliente puntero al array recibida
 * \param 	int lengthCliente limite del array
-* \return int Return (-1) Error / (0) Ok
+* \return 	int Return (-1) Error / (0) Ok
  */
 int info_calcularMaxRubro(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
 {
@@ -194,62 +248,108 @@ int info_calcularMaxRubro(Avisos* pArray, int length, Cliente* pArrayCliente, in
 	int j;
 	int flagExiste;
 	int indiceCuitLibre = 0;
-	int maxAvisos;
-	int rubroMax;
 	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
 	{
-		aux_init(arrayAux, lengthCliente);
-		for(i=0; i < lengthCliente; i++)
+		if(aux_init(arrayAux, lengthCliente)==0)
 		{
-			if(pArray[i].isEmpty == FALSE)
+			for(i=0; i < lengthCliente; i++)
 			{
-				flagExiste = 0;
-				for(j=0; j < indiceCuitLibre; j++)
+				if(pArray[i].isEmpty == FALSE)
 				{
-					if(arrayAux[j].isEmpty == FALSE && pArray[i].numeroRubro == arrayAux[j].rubros)
+					flagExiste = 0;
+					for(j=0; j < indiceCuitLibre; j++)
 					{
-						flagExiste = 1;
-						break;
+						if(arrayAux[j].isEmpty == FALSE && pArray[i].numeroRubro == arrayAux[j].rubros)
+						{
+							flagExiste = 1;
+							break;
+						}
+					}
+					if(flagExiste == 0)
+					{
+						arrayAux[indiceCuitLibre].rubros = pArray[i].numeroRubro;
+						arrayAux[indiceCuitLibre].isEmpty = FALSE;
+						indiceCuitLibre++;
 					}
 				}
-				if(flagExiste == 0)
-				{
-					arrayAux[indiceCuitLibre].rubros = pArray[i].numeroRubro;
-					arrayAux[indiceCuitLibre].isEmpty = FALSE;
-					indiceCuitLibre++;
-				}
+			}
+	/*
+			for(i=0; i< indiceCuitLibre;i++)
+			{
+				printf("rubros: %d\n", arrayAux[i].rubros);
+			}
+	*/
+			if(aux_printMaxRubro(arrayAux, lengthCliente, pArray, length, indiceCuitLibre)==0)
+			{
+				retorno = 0;
 			}
 		}
+	}
+	return retorno;
+}
 /*
-		for(i=0; i< indiceCuitLibre;i++)
+* \brief 	Imprime el rubro con sus avisos
+* 			Imprime el rubro con mas cantidad y su cantidad
+* \param 	Auxiliar* arrayAux puntero al array recibida
+* \param 	int lengthAux limite del array
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	int indiceARecorrer numero de indices cargados
+* \return 	int Return (-1) Error / (0) Ok
+ */
+static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length, int indiceARecorrer)
+{
+	int retorno = -1;
+	int i;
+	int avisosMax;
+	int rubrosMax;
+	if(arrayAux!= NULL && lengthAux > 0 && pArray !=NULL && length > 0 && indiceARecorrer > 0)
+	{
+		if(aux_calcularCantRubros(arrayAux, lengthAux, pArray, indiceARecorrer)==0)
 		{
-			printf("rubros: %d\n", arrayAux[i].rubros);
+			for(i=0; i< indiceARecorrer;i++)
+			{
+				printf("El rubro: %s tiene %d avisos\n", TXT_RUBROS[arrayAux[i].rubros], arrayAux[i].cantidad);
+				if(arrayAux[i].cantidad > avisosMax || i==0)
+				{
+					avisosMax = arrayAux[i].cantidad;
+					rubrosMax = arrayAux[i].rubros;
+				}
+			}
+			printf("El rubro con mas Avisos es el de %s con %d avisos\n\n", TXT_RUBROS[rubrosMax], avisosMax);
+			retorno = 0;
 		}
-*/
-		for(i = 0; i < indiceCuitLibre;i++)
+	}
+	return retorno;
+}
+/*
+* \brief	Calcula la cantidad de rubros que coinciden con el rubro del array de Avisos
+* \param 	Auxiliar* arrayAux puntero al array recibida
+* \param 	int length limite del array
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int indiceARecorrer numero de indices cargados
+* \return 	int Return (-1) Error / (0) Ok
+ */
+static int aux_calcularCantRubros(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int indiceARecorrer)
+{
+	int retorno = -1;
+	int j;
+	int i;
+	if(arrayAux!=NULL && lengthAux > 0 && pArray != NULL && indiceARecorrer > 0)
+	{
+		for(i = 0; i < indiceARecorrer;i++)
 		{
 			if(arrayAux[i].isEmpty == FALSE)
 			{
-				for(j=0; j < length;j++)
+				for(j=0; j < lengthAux;j++)
 				{
 					if(pArray[j].isEmpty == FALSE && arrayAux[i].rubros == pArray[j].numeroRubro)
 					{
 						arrayAux[i].cantidad++;
 					}
 				}
-
 			}
 		}
-		for(i=0; i< indiceCuitLibre;i++)
-		{
-			printf("El rubro: %s tiene %d avisos\n", TXT_RUBROS[arrayAux[i].rubros], arrayAux[i].cantidad);
-			if(arrayAux[i].cantidad > maxAvisos || i==0)
-			{
-				maxAvisos = arrayAux[i].cantidad;
-				rubroMax = arrayAux[i].rubros;
-			}
-		}
-		printf("El rubro con mas Avisos es el de %s con %d avisos\n\n", TXT_RUBROS[rubroMax], maxAvisos);
 		retorno = 0;
 	}
 	return retorno;
