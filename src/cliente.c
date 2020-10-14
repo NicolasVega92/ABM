@@ -462,6 +462,37 @@ int cliente_gainMoreThanAverage(Cliente* pArray, int length, float average, int*
 	}
 	return retorno;
 }
+/*
+* \brief 	Recibe un idCliente de un aviso y lo compara con el array Cliente para imprimir las coincidencias
+* 			del idCliente recibido y el id de los Clientes que estan cargados.
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \param 	int idClienteRef sector recibido
+* \return int Return (-1) Error / (0) Ok
+ */
+int cliente_printClienteById(Cliente* pArrayCliente, int lengthCliente, int idClienteRef)
+{
+	int retorno = -1;
+	int i;
+	if(pArrayCliente != NULL && idClienteRef > 0 && lengthCliente > 0)
+	{
+		for(i=0; i < lengthCliente; i++)
+		{
+			if(pArrayCliente[i].isEmpty == FALSE)
+			{
+				if(pArrayCliente[i].id == idClienteRef)
+				{
+					printf("El cliente al que pertenece la publicacion es: %s %s con el Cuit: %s\n", pArrayCliente[i].nameCliente, pArrayCliente[i].lastName, pArrayCliente[i].cuit);
+					break;
+				}
+			}
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
 /**
  * \brief Imprime un menú al usuario
  * \return void

@@ -32,6 +32,6 @@
 	int avisos_estadoActive(Avisos* pArray, int length, int indice);
 	int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar);
 	int avisos_removeByIdCliente(Avisos* pArray, int length, int idClienteARemover);
-	//int avisos_findByIdCliente(Avisos* pArray, int length, int id);
-	//int avisos_printClienteByCuit(Cliente* pArrayCliente, int lengthCliente, Avisos* pArray, char cuit[], int length);
+	int avisos_calcularAvisosPausados(Avisos* pArray, int length);
+	int avisos_searchIdClienteByIdAviso(Avisos* pArray, int length, int idAvisoBuscar);
 #endif /* AVISOS_H_ */

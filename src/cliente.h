@@ -31,6 +31,7 @@
 	int cliente_sumaSalary(Cliente* pArray, int length, float* pResultado);
 	int cliente_averageSalary(Cliente* pArray, int length, int* contadorEmpleadosCargados, float* pAverageSalary);
 	int cliente_gainMoreThanAverage(Cliente* pArray, int length, float average, int* pClienteGainMore);
+	int cliente_printClienteById(Cliente* pArrayCliente, int lengthCliente, int idClienteRef);
 	void cliente_menuOptions();
 #endif /* CLIENTE_H_ */
 

@@ -140,14 +140,14 @@ int main(void) {
 				{
 					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1-100)\n", &idSearch, 3, 1, 100)==0)
 					{
-						auxId = info_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE, idSearch);
+						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
 						if(auxId == -1)
 						{
 							printf("No se encontro el ID buscado en los avisos\n");
 						}
 						else
 						{
-							if(info_printClienteById(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE, auxId)==0)
+							if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
 							{
 								if(utn_getNumberInt("Desea pausar el AVISO\n1-SI\n2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
 								{
@@ -179,14 +179,14 @@ int main(void) {
 				{
 					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
 					{
-						auxId = info_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE, idSearch);
+						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
 						if(auxId == -1)
 						{
 							printf("No se encontro el ID buscado en los avisos\n");
 						}
 						else
 						{
-							if(info_printClienteById(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE, auxId)==0)
+							if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
 							{
 								if(utn_getNumberInt("Desea activar el AVISO\n1-SI\n2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
 								{
@@ -247,7 +247,7 @@ int main(void) {
 								info_calcularMaxAvisosByCuit(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE);
 								break;
 							case 2:
-								auxContador = info_calcularAvisosPausados(arrayAvisos, QTY_AVISOS);
+								auxContador = avisos_calcularAvisosPausados(arrayAvisos, QTY_AVISOS);
 								printf("la cantidad de avisos pausados hasta el momento es de %d\n\n", auxContador);
 								break;
 							case 3:

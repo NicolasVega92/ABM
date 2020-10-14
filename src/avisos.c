@@ -186,34 +186,6 @@ int avisos_findById(Avisos* pArray, int length, int id)
 	return retorno;
 }
 /*
-* \brief Devuelve como retorno el indice del ID pasado como parametro.
-* \param Avisos* pArray puntero al array recibida
-* \param int length limite del array
-* \param int idValue ID recibido a buscar
-* \return int Return (-1) Error / (0) Ok
-*
-int avisos_findByIdCliente(Avisos* pArray, int length, int id)
-{
-	int retorno = -1;
-	int i;
-
-	if(pArray!=NULL && length > 0)
-	{
-		for(i=0; i < length; i++)
-		{
-			if(pArray[i].isEmpty == FALSE)
-			{
-				if(pArray[i].idCliente == id)
-				{
-					retorno = i;
-					break;
-				}
-			}
-		}
-	}
-	return retorno;
-}*/
-/*
 * \brief 	Devuelve como retorno la cantidad de avisos con estado=1
 * 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
 * \param Avisos* pArray puntero al array recibida
@@ -428,36 +400,6 @@ int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int length
 	return retorno;
 }
 /*
- *
-
-int avisos_printClienteByCuit(Cliente* pArrayCliente, int lengthCliente, Avisos* pArray, char cuit[], int length)
-{
-	int retorno = -1;
-	int i;
-	int auxStrncmp;
-	if(pArray != NULL && lengthCliente > 0 && cuit != NULL && length > 0)
-	{
-		for(i=0; i < length; i++)
-		{
-			if(pArray[i].isEmpty == FALSE)
-			{
-				auxStrncmp = strncmp(cuit, pArrayCliente[i].cuit, LONG_NAME);
-				if(auxStrncmp == 0)
-				{
-					printf(	"El cliente contrato el aviso ID numero: %d\n"
-							"Con el archivo %s\n"
-							"Por %d días\n", pArray[i].idCliente, pArray[i].name, pArray[i].cantDias);
-					break;
-				}
-			}
-		}
-		retorno = auxStrncmp;
-	}
-	return retorno;
-}
-*/
-
-/*
 * \brief recibe un indice y convierte el campo de ese indice en estado = 0.
 * \param Avisos* pArray, array recibida para crear el avisos
 * \param int length limite del array
@@ -522,7 +464,61 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 	}
 	return retorno;
 }
-
+/*
+* \brief 	Devuelve como retorno la cantidad de avisos pausados recorriendo el struct de Avisos
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \return int Return (-1) Error / numero de avisos pausados Ok
+ */
+int avisos_calcularAvisosPausados(Avisos* pArray, int length)
+{
+	int retorno = -1;
+	int cantAvisosPausados = 0;
+	int i;
+	if(pArray!= NULL && length > 0)
+	{
+		for(i=0; i < length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE && pArray[i].estado == 0)
+			{
+				cantAvisosPausados++;
+			}
+		}
+		retorno = cantAvisosPausados;
+	}
+	return retorno;
+}
+/*
+* \brief Recibe un ID para comparar con los id de los avisos para retornar el idCliente de ese aviso
+* \param Avisos* pArray puntero al array recibida
+* \param int length limite del array
+* \param Cliente* pArrayCliente puntero al array recibida
+* \param int lengthCliente limite del array
+* \param int idAvisoBuscar sector recibido
+* \return int Return (-1) Error / numero de ID cliente en caso de Ok
+ */
+int avisos_searchIdClienteByIdAviso(Avisos* pArray, int length, int idAvisoBuscar)
+{
+	int retorno = -1;
+	int i;
+	int auxIdCliente;
+	if(pArray != NULL && length > 0 && idAvisoBuscar > 0)
+	{
+		for(i=0; i < length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE)
+			{
+				if(pArray[i].id == idAvisoBuscar)
+				{
+					auxIdCliente = pArray[i].idCliente;
+					retorno = auxIdCliente;
+					break;
+				}
+			}
+		}
+	}
+	return retorno;
+}
 
 
 

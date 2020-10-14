@@ -17,11 +17,8 @@ static const char TXT_RUBROS[10][LONG_NAME]={"Cerrajería", "Cochera", "Food Truc
 		int rubros;
 		int isEmpty;
 	}Auxiliar;
-	int info_searchIdClienteByIdAviso(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int idAvisoBuscar);
-	int info_printClienteById(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int idClienteRef);
 	int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
 	int info_calcularMaxAvisosByCuit(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
-	int info_calcularAvisosPausados(Avisos* pArray, int length);
 	int info_calcularMaxRubro(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente);
 	int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, char cuit[]);
 	int aux_init(Auxiliar* pArray, int length);
