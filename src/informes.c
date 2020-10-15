@@ -161,7 +161,7 @@ static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos*
 				if(maxAvisos == arrayAux[i].cantidad)
 				{
 					//print del maximo cliente con avisos act y pausados
-					printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", arrayAux[i].idCliente, arrayAux[i].cuit,maxAvisos);
+					printf("\nEl cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n", arrayAux[i].idCliente, arrayAux[i].cuit,maxAvisos);
 				}
 			}
 			retorno = 0;
@@ -287,7 +287,7 @@ static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, 
 			{
 				if(avisosMax == arrayAux[i].cantidad)
 				{
-					printf("El rubro con mas Avisos es el de %s con %d avisos\n\n", TXT_RUBROS[arrayAux[i].rubros], avisosMax);
+					printf("\nEl rubro con mas Avisos es el de %s con %d avisos\n", TXT_RUBROS[arrayAux[i].rubros], avisosMax);
 				}
 			}
 			retorno = 0;

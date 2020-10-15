@@ -255,7 +255,7 @@ int main(void) {
 				{
 					do
 					{
-						if(utn_getNumberInt("Ingrese una opcion:\n"
+						if(utn_getNumberInt("\nIngrese una opcion:\n"
 											"1- Cliente con más avisos\n"
 											"2- Cantidad de avisos pausados\n"
 											"3- Rubro con más avisos\n"
