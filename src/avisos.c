@@ -87,7 +87,7 @@ int avisos_add(Avisos* pArray, int length, int id, char texto[], int idCliente, 
 			pArray[indiceLibre].idCliente = idCliente;
 			pArray[indiceLibre].numeroRubro = numRubro;
 			pArray[indiceLibre].isEmpty = FALSE;
-			pArray[indiceLibre].estado = auxestado;
+			pArray[indiceLibre].isActive = auxestado;
 			strncpy(pArray[indiceLibre].texto, texto, sizeof(pArray[indiceLibre].texto)-1);
 		}
 		retorno = 0;
@@ -105,11 +105,11 @@ int avisos_add(Avisos* pArray, int length, int id, char texto[], int idCliente, 
 * \param int sector sector recibido
 * \return int Return (-1) Error / (0) Ok
 */
-int avisos_addForzada(Avisos* pArray, int length, char texto[], int idCliente, int numRubro, int estado)
+int avisos_addForzada(Avisos* pArray, int length, char texto[], int idCliente, int numRubro, int activo)
 {
 	int retorno = -1;
 	int indiceLibre;
-	if(pArray!=NULL && length > 0 && texto != NULL && idCliente > 0 &&  numRubro < 10 && numRubro > -1 && estado == 1)
+	if(pArray!=NULL && length > 0 && texto != NULL && idCliente > 0 &&  numRubro < 10 && numRubro > -1 && (activo == TRUE || activo == FALSE))
 	{
 		indiceLibre = avisos_findFirstValidPosition(pArray, QTY_AVISOS);
 		if(indiceLibre == -1)
@@ -122,7 +122,7 @@ int avisos_addForzada(Avisos* pArray, int length, char texto[], int idCliente, i
 			pArray[indiceLibre].idCliente = idCliente;
 			pArray[indiceLibre].numeroRubro = numRubro;
 			pArray[indiceLibre].isEmpty = FALSE;
-			pArray[indiceLibre].estado = estado;
+			pArray[indiceLibre].isActive = activo;
 			strncpy(pArray[indiceLibre].texto, texto, sizeof(pArray[indiceLibre].texto)-1);
 		}
 		retorno = 0;
@@ -151,6 +151,68 @@ int avisos_print(Avisos* pArray, int length)
 			}
 		}
 		retorno = 0;
+	}
+	return retorno;
+}
+/**
+* \brief Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* \param Avisos* pArray puntero al array recibida
+* \param int length limite del array
+* \return int Return (-1) Error / (0) Ok
+ */
+int avisos_printActivos(Avisos* pArray, int length)
+{
+	int retorno = -1;
+	int i;
+	int flagActivos=0;
+	if(pArray!=NULL && length > 0)
+	{
+		printf("[Avisos Publicados Activos]\n"
+				" Id|          Rubro| Id cliente|                     Descripción \n");
+		for(i=0; i< length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE && pArray[i].isActive == TRUE)
+			{
+				printf("%3d|%15s|%11d|%64s\n",pArray[i].id, TXT_RUBROS[pArray[i].numeroRubro], pArray[i].idCliente, pArray[i].texto);
+				flagActivos=1;
+				retorno = 0;
+			}
+		}
+		if(flagActivos == 0)
+		{
+			printf("\nNo hay ningun aviso activos, vaya a la opcion 6 para Activar alguno o opcion 4 para dar de alta uno nuevo\n\n");
+		}
+	}
+	return retorno;
+}
+/**
+* \brief Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* \param Avisos* pArray puntero al array recibida
+* \param int length limite del array
+* \return int Return (-1) Error / (0) Ok
+ */
+int avisos_printPausados(Avisos* pArray, int length)
+{
+	int retorno = -1;
+	int i;
+	int flagPausados=0;
+	if(pArray!=NULL && length > 0)
+	{
+		printf("[Avisos Publicados Pausados]\n"
+				" Id|          Rubro| Id cliente|                     Descripción \n");
+		for(i=0; i< length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE && pArray[i].isActive == FALSE)
+			{
+				printf("%3d|%15s|%11d|%64s\n",pArray[i].id, TXT_RUBROS[pArray[i].numeroRubro], pArray[i].idCliente, pArray[i].texto);
+				flagPausados = 1;
+				retorno = 0;
+			}
+		}
+		if(flagPausados == 0)
+		{
+			printf("\nNo hay ningun aviso pausado, vaya a la opcion 5 para Pausar alguno o opcion 4 para dar de alta uno nuevo\n\n");
+		}
 	}
 	return retorno;
 }
@@ -203,7 +265,7 @@ int avisos_countActiveByIdCliente(Avisos* pArray, int length, int id)
 			{
 				if(pArray[i].idCliente == id)
 				{
-					if(pArray[i].estado == 1)
+					if(pArray[i].isActive == TRUE)
 					{
 						countActive++;
 					}
@@ -253,7 +315,7 @@ int avisos_modifyAvisosByIndex(Avisos* pArray, int length, int indice)
 			}
 			bufferAvisos.isEmpty = FALSE;
 			bufferAvisos.id = pArray[indice].id;
-			bufferAvisos.estado = 1;
+			bufferAvisos.isActive = TRUE;
 			pArray[indice] = bufferAvisos;
 			retorno = 0;
 		}
@@ -415,9 +477,9 @@ int avisos_estadoPause(Avisos* pArray, int length, int indice)
 			{
 				if(i == indice)
 				{
-					if(pArray[indice].estado == 1)
+					if(pArray[indice].isActive == TRUE)
 					{
-						pArray[indice].estado = 0;
+						pArray[indice].isActive = FALSE;
 						retorno = 0;
 					}
 					else
@@ -450,9 +512,9 @@ int avisos_estadoActive(Avisos* pArray, int length, int indice)
 			{
 				if(i == indice)
 				{
-					if(pArray[indice].estado == 0)
+					if(pArray[indice].isActive == FALSE)
 					{
-						pArray[indice].estado = 1;
+						pArray[indice].isActive = TRUE;
 						retorno = 0;
 					}
 					else
@@ -487,7 +549,7 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 			{
 				if(pArray[i].idCliente == idBuscar)
 				{
-					printf("%s - %s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].estado]);
+					printf("%s - %s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].isActive]);
 					flagAviso = 1;
 				}
 			}
@@ -514,7 +576,7 @@ int avisos_calcularAvisosPausados(Avisos* pArray, int length)
 	{
 		for(i=0; i < length; i++)
 		{
-			if(pArray[i].isEmpty == FALSE && pArray[i].estado == 0)
+			if(pArray[i].isEmpty == FALSE && pArray[i].isActive == FALSE)
 			{
 				cantAvisosPausados++;
 			}

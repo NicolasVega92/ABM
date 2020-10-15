@@ -540,14 +540,14 @@ static int isAlphNum(char cadena[])
 int utn_getCuit(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite)
 {
 	int retorno = -1;
-	char bufferString[LONG_CUIT];
+	char bufferString[LONG_NAME];
 
 	if(pMensaje != NULL && pResultado != NULL && pMensajeError != NULL && reintentos >= 0 && limite > 0 )
 	{
 		do
 		{
 			printf("%s", pMensaje);
-			if(	(myGets(bufferString, LONG_CUIT)== 0) &&
+			if(	(myGets(bufferString, LONG_NAME)== 0) &&
 				(strnlen(bufferString, sizeof(bufferString)-1) <= limite) &&
 				(isCuit(bufferString)==1))
 			{
@@ -599,6 +599,10 @@ static int isCuit(char cadena[])
 				break;
 			}
 		}
+	}
+	if(i!=13)
+	{
+		retorno = 0;
 	}
 	return retorno;
 }

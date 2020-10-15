@@ -32,7 +32,7 @@ int main(void) {
 	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Para desarrollar los músculos del cuerpo", 2, 3, 1);
 	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Lugar para poder comunicarse con los demás", 1, 4, 1);
 	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Sitio de instrucción para los adolescentes", 3, 7, 1);
-	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Comida para llevar de aca para alla con mucho glamour", 1, 2, 1);
+	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Comida para llevar de aca para alla con mucho glamour", 1, 2, 0);
 	avisos_addForzada(arrayAvisos, QTY_AVISOS, "Transporte que brinda alimentos a los civiles", 3, 2, 1);
 	do
 	{
@@ -144,34 +144,37 @@ int main(void) {
 			case 5:
 				if(contadorClientes > 0)
 				{
-					avisos_print(arrayAvisos, QTY_AVISOS);
-					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1-100)\n", &idSearch, 3, 1, 100)==0)
+					//avisos_print(arrayAvisos, QTY_AVISOS);
+					if(avisos_printActivos(arrayAvisos, QTY_AVISOS)==0)
 					{
-						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
-						if(auxId == -1)
+						if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1-100)\n", &idSearch, 3, 1, 100)==0)
 						{
-							printf("No se encontro el ID buscado en los avisos\n");
-						}
-						else
-						{
-							if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
+							auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
+							if(auxId == -1)
 							{
-								if(utn_getNumberInt("Desea pausar el AVISO\n"
-													"1-SI\n"
-													"2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
+								printf("No se encontro el ID buscado en los avisos\n");
+							}
+							else
+							{
+								if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
 								{
-									if(opcion == 2)
+									if(utn_getNumberInt("Desea pausar el AVISO\n"
+														"1-SI\n"
+														"2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
 									{
-										printf("No se PAUSO nada\n");
-									}
-									else
-									{
-										auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
-										if(auxId != -1)
+										if(opcion == 2)
 										{
-											if(avisos_estadoPause(arrayAvisos, QTY_AVISOS, auxId)==0)
+											printf("No se PAUSO nada\n");
+										}
+										else
+										{
+											auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
+											if(auxId != -1)
 											{
-												printf("Aviso PAUSADO con exito\n");
+												if(avisos_estadoPause(arrayAvisos, QTY_AVISOS, auxId)==0)
+												{
+													printf("Aviso PAUSADO con exito\n");
+												}
 											}
 										}
 									}
@@ -188,32 +191,35 @@ int main(void) {
 			case 6:
 				if(contadorClientes > 0)
 				{
-					avisos_print(arrayAvisos, QTY_AVISOS);
-					if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
+					//avisos_print(arrayAvisos, QTY_AVISOS);
+					if(avisos_printPausados(arrayAvisos, QTY_AVISOS)==0)
 					{
-						auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
-						if(auxId == -1)
+						if(utn_getNumberInt("Ingrese el ID del aviso que quiere verificar:\n", "ERROR, ingrese un numero de id valido (1 - 100)\n", &idSearch, 3, 1, 100)==0)
 						{
-							printf("No se encontro el ID buscado en los avisos\n");
-						}
-						else
-						{
-							if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
+							auxId = avisos_searchIdClienteByIdAviso(arrayAvisos, QTY_AVISOS, idSearch);
+							if(auxId == -1)
 							{
-								if(utn_getNumberInt("Desea activar el AVISO\n1-SI\n2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
+								printf("No se encontro el ID buscado en los avisos\n");
+							}
+							else
+							{
+								if(cliente_printClienteById(arrayClientes, QTY_CLIENTE, auxId)==0)
 								{
-									if(opcion == 2)
+									if(utn_getNumberInt("Desea activar el AVISO\n1-SI\n2-NO\n", "ERROR, ingrese 1 o 2 según corresponda\n", &opcion, 3, 1, 2)==0)
 									{
-										printf("No se ACTIVO NADA\n");
-									}
-									else
-									{
-										auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
-										if(auxId !=-1)
+										if(opcion == 2)
 										{
-											if(avisos_estadoActive(arrayAvisos, QTY_AVISOS, auxId)==0)
+											printf("No se ACTIVO NADA\n");
+										}
+										else
+										{
+											auxId = avisos_findById(arrayAvisos, QTY_AVISOS, idSearch);
+											if(auxId !=-1)
 											{
-												printf("Aviso ACTIVADO con exito\n");
+												if(avisos_estadoActive(arrayAvisos, QTY_AVISOS, auxId)==0)
+												{
+													printf("Aviso ACTIVADO con exito\n");
+												}
 											}
 										}
 									}

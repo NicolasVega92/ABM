@@ -176,8 +176,6 @@ static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos*
 	int retorno = -1;
 	int i;
 	int maxAvisos;
-	char maxCuit[LONG_CUIT];
-	int indiceMax;
 	if(arrayAux!= NULL && lengthAux >0 && pArray != NULL && length > 0 && indicesRecorrer >= 0)
 	{
 		if(aux_calcularCantDeAvisosByIdCliente(arrayAux, lengthAux, pArray, length)==0)
@@ -189,12 +187,16 @@ static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos*
 				if(arrayAux[i].cantidad > maxAvisos || i==0)
 				{
 					maxAvisos = arrayAux[i].cantidad;
-					indiceMax = arrayAux[i].idCliente;
-					strncpy(maxCuit, arrayAux[i].cuit,sizeof(maxCuit)-1);
 				}
 			}
-			//print del maximo cliente con avisos act y pausados
-			printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", indiceMax, maxCuit,maxAvisos);
+			for(i=0; i < indicesRecorrer; i++)
+			{
+				if(maxAvisos == arrayAux[i].cantidad)
+				{
+					//print del maximo cliente con avisos act y pausados
+					printf("El cliente con mas Avisos es el del ID %d con CUIT: %s con %d avisos\n\n", arrayAux[i].idCliente, arrayAux[i].cuit,maxAvisos);
+				}
+			}
 			retorno = 0;
 		}
 	}
@@ -302,7 +304,6 @@ static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, 
 	int retorno = -1;
 	int i;
 	int avisosMax;
-	int rubrosMax;
 	if(arrayAux!= NULL && lengthAux > 0 && pArray !=NULL && length > 0 && indiceARecorrer > 0)
 	{
 		if(aux_calcularCantRubros(arrayAux, lengthAux, pArray, indiceARecorrer)==0)
@@ -313,10 +314,15 @@ static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, 
 				if(arrayAux[i].cantidad > avisosMax || i==0)
 				{
 					avisosMax = arrayAux[i].cantidad;
-					rubrosMax = arrayAux[i].rubros;
 				}
 			}
-			printf("El rubro con mas Avisos es el de %s con %d avisos\n\n", TXT_RUBROS[rubrosMax], avisosMax);
+			for(i=0; i< indiceARecorrer;i++)
+			{
+				if(avisosMax == arrayAux[i].cantidad)
+				{
+					printf("El rubro con mas Avisos es el de %s con %d avisos\n\n", TXT_RUBROS[arrayAux[i].rubros], avisosMax);
+				}
+			}
 			retorno = 0;
 		}
 	}

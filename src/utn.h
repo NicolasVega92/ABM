@@ -11,8 +11,7 @@
 	#define MIN_SECTOR 1
 	#define TRUE 1
 	#define FALSE 0
-	#define LONG_CUIT 14
-
+	//#define LONG_CUIT 14
 	int utn_getNumberInt(char* pMensaje, char* pMensajeError, int* pResultado, int reintentos, int minimo, int maximo);
 	int utn_getNumberFloat(char* pMensaje, char* pMensajeError, float* pResultado, int reintentos, float minimo, float maximo);
 	int utn_getChar(char* pMensaje, char* pMensajeError, char* pResultado, int reintentos, int limite);
