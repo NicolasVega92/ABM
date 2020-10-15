@@ -15,9 +15,9 @@
 static int cliente_generarIdNuevo(void);
 /*
 * \brief	Inicializa todas las posiciones del array en empty (TRUE).
-* \param Cliente* pArray puntero al array recibido
-* \param int length limite del array
-* \return int Retorna (-1) si se encuentra un error / (0)  Ok
+* \param 	Cliente* pArray puntero al array recibido
+* \param 	int length limite del array
+* \return 	int Retorna (-1) si se encuentra un error / (0)  Ok
 */
 int cliente_init(Cliente* pArray, int length)
 {
@@ -65,8 +65,7 @@ int cliente_findFirstValidPosition(Cliente* pArray, int length)
 * \param 	int id Id recibido
 * \param 	char name[], array que contiene chars
 * \param 	char lastName[], array que contiene chars
-* \param 	float salary salario recibido
-* \param 	int sector sector recibido
+* \param 	char cuit[]
 * \return 	int Return (-1) Error / (0) Ok
 */
 int cliente_add(Cliente* pArray, int length, int id, char name[], char lastName[], char cuit[])
@@ -100,8 +99,7 @@ int cliente_add(Cliente* pArray, int length, int id, char name[], char lastName[
 * \param int id Id recibido
 * \param char name[], array que contiene chars
 * \param char lastName[], array que contiene chars
-* \param float salary salario recibido
-* \param int sector sector recibido
+* \param char cuit[]
 * \return int Return (-1) Error / (0) Ok
 */
 int cliente_addForzada(Cliente* pArray, int length, char name[], char lastName[], char cuit[])
@@ -155,7 +153,7 @@ int cliente_print(Cliente* pArray, int length)
 * \brief Devuelve como retorno el indice del ID pasado como parametro.
 * \param Cliente* pArray puntero al array recibida
 * \param int length limite del array
-* \param int idValue ID recibido a buscar
+* \param int id, ID recibido a buscar
 * \return int Return (-1) Error / (0) Ok
 * */
 int cliente_findById(Cliente* pArray, int length, int id)
@@ -179,8 +177,9 @@ int cliente_findById(Cliente* pArray, int length, int id)
 	return retorno;
 }
 /**
-* \brief 	Modifica un campo de un Cliente, dicho empleado es el indicado por el Indice pasado como parametro
+* \brief 	Modifica un campo de un Cliente, es el indicado por el Indice pasado como parametro
 * 			Da la opcion de que campo se desea modificar.
+* 			Se pregunta que campo desea modificar recibido por un getNumber
 * \param 	Cliente* pArray puntero al array recibida
 * \param 	int length limite del array
 * \param 	int indice Int buscado en el array para modificar algún campo
@@ -230,22 +229,22 @@ int cliente_modifyClienteByIndex(Cliente* pArray, int length, int indice)
 * \brief Modifica todos los campos de un Cliente, dicho empleado es el indicado por el Indice pasado como parametro
 * \param Cliente* pArray puntero al array recibida
 * \param int length limite del array
-* \param int indice Int buscado en el array para modificar algún campo
+* \param int indice, Int buscado en el array para modificar algún campo
 * \return int Return (-1) Error / (0) Ok
  */
-int cliente_modifyAll(Cliente* pArray, int length, int id)
+int cliente_modifyAll(Cliente* pArray, int length, int indice)
 {
 	int retorno = -1;
-	Cliente bufferCliente = pArray[id];
-	if(pArray != NULL && length > 0  && id >= 0 && id < length)
+	Cliente bufferCliente = pArray[indice];
+	if(pArray != NULL && length > 0  && indice >= 0 && indice < length)
 	{
 		if(	(utn_getName("Ingrese el nuevo Nombre de la Cliente:\n", "Error, ingrese un nombre válido\n", bufferCliente.nameCliente, 3, LONG_NAME)==0) &&
 			(utn_getName("Ingrese el nuevo Apellido:\n", "Error, ingrese un apellido válido\n", bufferCliente.lastName, 3, LONG_NAME)==0) &&
 			(utn_getCuit("Ingrese el nuevo CUIT del cliente:\n", "Error CUIT:(xx-xxxxxxxx-x)\n", bufferCliente.cuit, 3, LONG_NAME)==0))
 		{
 			bufferCliente.isEmpty = FALSE;
-			bufferCliente.id = pArray[id].id;
-			pArray[id] = bufferCliente;
+			bufferCliente.id = pArray[indice].id;
+			pArray[indice] = bufferCliente;
 			retorno = 0;
 		}
 	}
@@ -258,8 +257,7 @@ int cliente_modifyAll(Cliente* pArray, int length, int id)
 * \param int* pId puntero de Id
 * \param char aName[], array que contiene chars
 * \param char aLastName[], array que contiene chars
-* \param float* pSalary puntero al salario recibido
-* \param int* pSector puntero al sector recibido
+* \param char aCuit[]
 * \return int Return (-1) Error / (0) Ok
  */
 int cliente_altaCliente(int length, int* pId, char aName[], char aLastName[], char aCuit[])
@@ -287,10 +285,10 @@ static int cliente_generarIdNuevo(void)
 	return id;
 }
 /*
-* \brief Remueve un cliente del array poniendo a isEmpty == TRUE
+* \brief Remueve un cliente del array poniendo a isEmpty == TRUE, el indice es pasado como parametro
 * \param Cliente* pArray puntero al array recibida
 * \param int length limite del array
-* \param int indice indice recibido a buscar en el array
+* \param int indice indice recibido a remover
 * \return int Return (-1) Error / (0) Ok
 */
 int cliente_remove(Cliente* pArray, int length, int indice)
@@ -463,10 +461,8 @@ int cliente_gainMoreThanAverage(Cliente* pArray, int length, float average, int*
 	return retorno;
 }
 /*
-* \brief 	Recibe un idCliente de un aviso y lo compara con el array Cliente para imprimir las coincidencias
-* 			del idCliente recibido y el id de los Clientes que estan cargados.
-* \param 	Avisos* pArray puntero al array recibida
-* \param 	int length limite del array
+* \brief 	Recibe un idCliente del array Aviso y lo compara con el array Cliente para imprimir los campos
+* 			de la coincidencia del idCliente recibido.
 * \param 	Cliente* pArrayCliente puntero al array recibida
 * \param 	int lengthCliente limite del array
 * \param 	int idClienteRef sector recibido

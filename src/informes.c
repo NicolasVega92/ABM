@@ -16,17 +16,13 @@ static int aux_printMaxAvisosWithCuit(Auxiliar* arrayAux, int lengthAux, Avisos*
 static int aux_calcularCantDeAvisosByIdCliente(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length);
 static int aux_printMaxRubro(Auxiliar* arrayAux, int lengthAux, Avisos* pArray, int length,int indiceARecorrer);
 static int aux_calcularCantRubros(Auxiliar* arrayAux, int length, Avisos* pArray, int indiceARecorrer);
-
-
-
 /*
 * \brief 	Imprime los valores del Cliente y le agrega al print la cantidad de avisos buscados por la funcion
-* 			avisos_countActiveByIdCliente()
+* 			avisos_countActiveByIdCliente() Y avisos_countPauseByIdCliente()
 * \param 	Avisos* pArray puntero al array recibida
 * \param 	int length limite del array
 * \param 	Cliente* pArrayCliente puntero al array recibida
 * \param 	int lengthCliente limite del array
-* \param 	int idClienteRef sector recibido
 * \return int Return (-1) Error / (0) Ok
 */
 int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
@@ -52,38 +48,7 @@ int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayClien
 	return retorno;
 }
 /*
-*/
-int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, char cuit[])
-{
-	int retorno = -1;
-	int i;
-	int indiceArrayCliente;
-	int contadorAvisos=0;
-	if(pArray != NULL && pArrayCliente != NULL && cuit != NULL && length > 0 && lengthCliente > 0)
-	{
-		for(i=0; i < length; i++)
-		{
-			if(pArray[i].isEmpty == FALSE)
-			{
-				indiceArrayCliente = cliente_findById(pArrayCliente, QTY_CLIENTE, pArray[i].idCliente);
-				if(indiceArrayCliente != -1)
-				{
-					contadorAvisos++;
-				}
-				printf("Id:%d  - Nombre: %s  -  Apellido: %s  -   Cuit: %s  - Cantidad de avisos contratados: %d \n",
-																												pArrayCliente[i].id,
-																												pArrayCliente[i].nameCliente,
-																												pArrayCliente[i].lastName,
-																												pArrayCliente[i].cuit,
-																												contadorAvisos);
-			}
-		}
-		retorno = 0;
-	}
-	return retorno;
-}
-/*
-* \brief	Inicializa todas las posiciones del array en empty (TRUE).
+* \brief	Inicializa todas las posiciones del array en el campo isEmpty== (TRUE).
 * \param 	Auxiliar* pArray puntero al array recibido
 * \param 	int length limite del array
 * \return 	(-1) si se encuentra un error / (0)  Ok
@@ -356,6 +321,44 @@ static int aux_calcularCantRubros(Auxiliar* arrayAux, int lengthAux, Avisos* pAr
 						arrayAux[i].cantidad++;
 					}
 				}
+			}
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
+/*
+* \brief
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	Cliente* pArrayCliente puntero al array recibida
+* \param 	int lengthCliente limite del array
+* \param 	char cuit[]
+* \return int Return (-1) Error / (0) Ok
+*/
+int info_printClienteWithCantidadAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, char cuit[])
+{
+	int retorno = -1;
+	int i;
+	int indiceArrayCliente;
+	int contadorAvisos=0;
+	if(pArray != NULL && pArrayCliente != NULL && cuit != NULL && length > 0 && lengthCliente > 0)
+	{
+		for(i=0; i < length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE)
+			{
+				indiceArrayCliente = cliente_findById(pArrayCliente, QTY_CLIENTE, pArray[i].idCliente);
+				if(indiceArrayCliente != -1)
+				{
+					contadorAvisos++;
+				}
+				printf("Id:%d  - Nombre: %s  -  Apellido: %s  -   Cuit: %s  - Cantidad de avisos contratados: %d \n",
+																												pArrayCliente[i].id,
+																												pArrayCliente[i].nameCliente,
+																												pArrayCliente[i].lastName,
+																												pArrayCliente[i].cuit,
+																												contadorAvisos);
 			}
 		}
 		retorno = 0;

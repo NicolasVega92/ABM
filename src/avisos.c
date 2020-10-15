@@ -7,12 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "avisos.h"
 #include "utn.h"
 #include "cliente.h"
 #include "informes.h"
-
 static int avisos_generarIdNuevo(void);
 //static const char TXT_TIPOS[2][LONG_NAME]={"Pausado", "Activo"}; //TXT_TIPOS[pArray[i].estado]
 /*
@@ -64,10 +62,10 @@ int avisos_findFirstValidPosition(Avisos* pArray, int length)
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
 * \param int id Id recibido
-* \param char name[], array que contiene chars
-* \param char lastName[], array que contiene chars
-* \param float salary salario recibido
-* \param int sector sector recibido
+* \param char texto[], array que contiene chars
+* \param int idCliente recibido
+* \param int numRubro recibido
+* \param int auxestado recibido
 * \return int Return (-1) Error / (0) Ok
 */
 int avisos_add(Avisos* pArray, int length, int id, char texto[], int idCliente, int numRubro, int auxestado)
@@ -98,11 +96,10 @@ int avisos_add(Avisos* pArray, int length, int id, char texto[], int idCliente, 
 * \brief Agrega en el array de la estructura los valores pasados como parametros dentro del indice devuelto por la funcion searchFirstValidPosition
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param int id Id recibido
-* \param char name[], array que contiene chars
-* \param char lastName[], array que contiene chars
-* \param float salary salario recibido
-* \param int sector sector recibido
+* \param char texto[], array que contiene chars
+* \param int idCliente recibido
+* \param int numRubro recibido
+* \param int activo recibido
 * \return int Return (-1) Error / (0) Ok
 */
 int avisos_addForzada(Avisos* pArray, int length, char texto[], int idCliente, int numRubro, int activo)
@@ -155,7 +152,8 @@ int avisos_print(Avisos* pArray, int length)
 	return retorno;
 }
 /**
-* \brief Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* \brief 	Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* 			y el campo isActive == TRUE
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
 * \return int Return (-1) Error / (0) Ok
@@ -186,7 +184,8 @@ int avisos_printActivos(Avisos* pArray, int length)
 	return retorno;
 }
 /**
-* \brief Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* \brief 	Imprime el array pasado como parametro, si el campo isEmpty == FALSE
+* 			y el campo isActive == FALSE
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
 * \return int Return (-1) Error / (0) Ok
@@ -220,7 +219,7 @@ int avisos_printPausados(Avisos* pArray, int length)
 * \brief Devuelve como retorno el indice del ID pasado como parametro.
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param int idValue ID recibido a buscar
+* \param int id, ID recibido a buscar
 * \return int Return (-1) Error / (0) Ok
 * */
 int avisos_findById(Avisos* pArray, int length, int id)
@@ -245,7 +244,7 @@ int avisos_findById(Avisos* pArray, int length, int id)
 	return retorno;
 }
 /*
-* \brief 	Devuelve como retorno la cantidad de avisos con estado=1
+* \brief 	Devuelve como retorno la cantidad de avisos con estado== TRUE (1)
 * 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
@@ -277,11 +276,11 @@ int avisos_countActiveByIdCliente(Avisos* pArray, int length, int id)
 	return retorno;
 }
 /*
-* \brief 	Devuelve como retorno la cantidad de avisos con estado=1
+* \brief 	Devuelve como retorno la cantidad de avisos con estado==FALSE (0)
 * 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param int idValue ID recibido a buscar
+* \param int id, ID recibido a buscar
 * \return int Return (-1) Error / (0) Ok
 * */
 int avisos_countPauseByIdCliente(Avisos* pArray, int length, int id)
@@ -355,14 +354,17 @@ int avisos_modifyAvisosByIndex(Avisos* pArray, int length, int indice)
 	return retorno;
 }
 /**
-* \brief crea los valores para los campos del avisos, que luego se sumaran al array por la funcion createAvisos
+* \brief 	Crea los valores para los campos del avisos, que luego se sumaran al array por la funcion addAvisos
+* 			Utiliza la funcion cliente_findById para determinar si el id del cliente que quiere crear el aviso existe
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
+* \param Cliente* pArrayCliente puntero al array recibida
+* \param int lengthCliente limite del array
 * \param int* pId puntero de Id
-* \param char aName[], array que contiene chars
-* \param char aLastName[], array que contiene chars
-* \param float* pSalary puntero al salario recibido
-* \param int* pSector puntero al sector recibido
+* \param char aText[]
+* \param int* pIdCliente puntero de IdCliente
+* \param int* pRubro puntero del rubro
+* \param int* pEstado puntero del isActive
 * \return int Return (-1) Error / (0) Ok
  */
 int avisos_altaAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int* pId, char aText[], int* pIdCliente, int* pRubro, int* pEstado)
@@ -410,11 +412,11 @@ static int avisos_generarIdNuevo(void)
 	return id;
 }
 /*
-* \brief Remueve un avisos del array poniendo a isEmpty == TRUE
-* \param Avisos* pArray puntero al array recibida
-* \param int length limite del array
-* \param int indice indice recibido a buscar en el array
-* \return int Return (-1) Error / (0) Ok
+* \brief 	Remueve un avisos del array poniendo a isEmpty == TRUE con el parametro del indice recibido
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	int indice indice recibido a buscar en el array
+* \return	int Return (-1) Error / (0) Ok
 */
 int avisos_remove(Avisos* pArray, int length, int indice)
 {
@@ -429,10 +431,10 @@ int avisos_remove(Avisos* pArray, int length, int indice)
 /*
 * \brief 	recibe un id y recorriendo el array struct Avisos pondra en TRUE el isEmpty
 * 			que coincidan el id recibido con el idCliente de avisos
-* \param Avisos* pArray puntero al array recibida
-* \param int length limite del array
-* \param int idClienteARemover indice recibido a buscar en el array
-* \return int Return (-1) Error / (0) Ok
+* \param 	Avisos* pArray puntero al array recibida
+* \param 	int length limite del array
+* \param 	int idClienteARemover indice recibido a buscar en el array
+* \return 	int Return (-1) Error / (0) Ok
 */
 int avisos_removeByIdCliente(Avisos* pArray, int length, int idClienteARemover)
 {
@@ -459,6 +461,8 @@ int avisos_removeByIdCliente(Avisos* pArray, int length, int idClienteARemover)
 * \brief Utilizando las funciones "alta" y "add", crea un avisos valido en el array de la structura.
 * \param Avisos* pArray, array recibida para crear el avisos
 * \param int length limite del array
+* \param Cliente* pArrayCliente, array recibida para crear el avisos
+* \param int lengthCliente limite del array
 * \return int Return (-1) Error / (0) Ok
  */
 int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente)
@@ -491,10 +495,11 @@ int avisos_create(Avisos* pArray, int length, Cliente* pArrayCliente, int length
 	return retorno;
 }
 /*
-* \brief 	recibe un indice y convierte el campo de ese indice en estado = 0.
-* 			Si el aviso ya estaba en estado = 0, devuelve un mensaje de error
+* \brief 	recibe un indice y convierte el campo de ese indice en isActive = FALSE (0).
+* 			Si el aviso ya estaba en isActive = 0, devuelve un mensaje de error
 * \param 	Avisos* pArray, array recibida para crear el avisos
 * \param 	int length limite del array
+* \param 	int indice, numero de indice recibido a revisar
 * \return	int Return (-1) Error / (0) Ok
  */
 int avisos_estadoPause(Avisos* pArray, int length, int indice)
@@ -526,10 +531,11 @@ int avisos_estadoPause(Avisos* pArray, int length, int indice)
 	return retorno;
 }
 /*
-* \brief 	recibe un indice y convierte el campo de ese indice en estado = 1.
-* 			Si el indice se encontraba en estado = 1, devuelve un mensaje de error.
+* \brief 	recibe un indice y convierte el campo de ese indice en isActive = TRUE (1).
+* 			Si el indice se encontraba en isActive = TRUE, devuelve un mensaje de error.
 * \param 	Avisos* pArray, array recibida para crear el avisos
 * \param 	int length limite del array
+* \param 	int indice, numero de indice recibido a revisar
 * \return 	int Return (-1) Error / (0) Ok
  */
 int avisos_estadoActive(Avisos* pArray, int length, int indice)
@@ -581,7 +587,7 @@ int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar)
 			{
 				if(pArray[i].idCliente == idBuscar)
 				{
-					printf("%s - %s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].isActive]);
+					printf("%15s --> %10s\n", TXT_RUBROS[pArray[i].numeroRubro], TXT_TIPOS[pArray[i].isActive]);
 					flagAviso = 1;
 				}
 			}
@@ -621,8 +627,6 @@ int avisos_calcularAvisosPausados(Avisos* pArray, int length)
 * \brief Recibe un ID para comparar con los id de los avisos para retornar el idCliente de ese aviso
 * \param Avisos* pArray puntero al array recibida
 * \param int length limite del array
-* \param Cliente* pArrayCliente puntero al array recibida
-* \param int lengthCliente limite del array
 * \param int idAvisoBuscar sector recibido
 * \return int Return (-1) Error / numero de ID cliente en caso de Ok
  */
