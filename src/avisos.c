@@ -276,6 +276,38 @@ int avisos_countActiveByIdCliente(Avisos* pArray, int length, int id)
 	}
 	return retorno;
 }
+/*
+* \brief 	Devuelve como retorno la cantidad de avisos con estado=1
+* 			que coincidan con el id pasado como parametro == idCliente de la struct Avisos
+* \param Avisos* pArray puntero al array recibida
+* \param int length limite del array
+* \param int idValue ID recibido a buscar
+* \return int Return (-1) Error / (0) Ok
+* */
+int avisos_countPauseByIdCliente(Avisos* pArray, int length, int id)
+{
+	int retorno = -1;
+	int i;
+	int countPause = 0;
+	if(pArray!=NULL && length > 0)
+	{
+		for(i=0; i < length; i++)
+		{
+			if(pArray[i].isEmpty == FALSE)
+			{
+				if(pArray[i].idCliente == id)
+				{
+					if(pArray[i].isActive == FALSE)
+					{
+						countPause++;
+					}
+				}
+			}
+		}
+		retorno = countPause;
+	}
+	return retorno;
+}
 /**
 * \brief Modifica un campo de un Avisos, dicho empleado es el indicado por el Indice pasado como parametro
 * \param Avisos* pArray puntero al array recibida

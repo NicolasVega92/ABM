@@ -34,15 +34,17 @@ int info_printClienteWithAvisos(Avisos* pArray, int length, Cliente* pArrayClien
 	int retorno = -1;
 	int i;
 	int contadorActivos;
+	int contadorPausados;
 	if(pArray != NULL && pArrayCliente != NULL && length > 0 && lengthCliente > 0)
 	{
-		printf(" ID|         Nombre|       Apellido|           CUIT|  Cantidad de avisos activos\n");
+		printf(" ID|         Nombre|       Apellido|           CUIT|  Avisos activos| Avisos Pausados|\n");
 		for(i=0; i < lengthCliente; i++)
 		{
 			if(pArrayCliente[i].isEmpty == FALSE)
 			{
 				contadorActivos = avisos_countActiveByIdCliente(pArray, QTY_AVISOS, pArrayCliente[i].id);
-				printf("%3d|%15s|%15s|%15s|%15d\n", pArrayCliente[i].id, pArrayCliente[i].nameCliente, pArrayCliente[i].lastName, pArrayCliente[i].cuit, contadorActivos);
+				contadorPausados = avisos_countPauseByIdCliente(pArray, QTY_AVISOS, pArrayCliente[i].id);
+				printf("%3d|%15s|%15s|%15s|%16d|%16d|\n", pArrayCliente[i].id, pArrayCliente[i].nameCliente, pArrayCliente[i].lastName, pArrayCliente[i].cuit, contadorActivos, contadorPausados);
 			}
 		}
 		retorno = 0;

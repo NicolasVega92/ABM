@@ -30,6 +30,7 @@
 	int avisos_findById(Avisos* pArray, int length, int id);
 	int avisos_altaAvisos(Avisos* pArray, int length, Cliente* pArrayCliente, int lengthCliente, int* pId, char aText[], int* pIdCliente, int* pRubro, int* pEstado);
 	int avisos_countActiveByIdCliente(Avisos* pArray, int length, int id);
+	int avisos_countPauseByIdCliente(Avisos* pArray, int length, int id);
 	int avisos_estadoPause(Avisos* pArray, int length, int indice);
 	int avisos_estadoActive(Avisos* pArray, int length, int indice);
 	int avisos_printByIdCliente(Avisos* pArray, int length, int idBuscar);
