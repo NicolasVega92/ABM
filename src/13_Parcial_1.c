@@ -259,7 +259,9 @@ int main(void) {
 											"1- Cliente con más avisos\n"
 											"2- Cantidad de avisos pausados\n"
 											"3- Rubro con más avisos\n"
-											"4- SALIR\n", "Error, ingrese (1 - 4)\n", &opcion, 3, 1, 4)==0)
+											"4- Cliente con más avisos Activos\n"
+											"5- Cliente con más avisos Pausados\n"
+											"6- SALIR\n", "Error, ingrese (1 - 6)\n", &opcion, 3, 1, 6)==0)
 						{
 							switch(opcion)
 							{
@@ -273,9 +275,21 @@ int main(void) {
 							case 3:
 								info_calcularMaxRubro(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE);
 								break;
+							case 4:
+								if(info_calcularMaxAvisosActivosByCuit(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE)==0)
+								{
+									printf("Salio\n");
+								}
+								break;
+							case 5:
+								if(info_calcularMaxAvisosPausadosByCuit(arrayAvisos, QTY_AVISOS, arrayClientes, QTY_CLIENTE)==0)
+								{
+									printf("Salio\n");
+								}
+								break;
 							}
 						}
-					}while(opcion != 4);
+					}while(opcion != 6);
 				}
 				else
 				{
